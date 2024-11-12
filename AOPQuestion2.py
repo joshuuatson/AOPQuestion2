@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 plt.ioff()  # Turns off interactive mode
 
 # Constants
-delta = 0 # Example value for delta
+delta = 10 # Example value for delta
 
 # Define the Bloch equations
 def blocheqns(t, y):  # Only `delta` is an extra argument here
@@ -18,8 +18,8 @@ def blocheqns(t, y):  # Only `delta` is an extra argument here
 
 # Initial conditions for u, v, w
 u0 = 0.0
-v0 = 1.0
-w0 = 0.0
+v0 = 0.0
+w0 = 1.0
 initial_conditions = [u0, v0, w0]
 
 # Time span and points for evaluation
@@ -45,7 +45,16 @@ ax.set_ylabel("v(t)")
 ax.set_zlabel("w(t)")
 ax.set_title("3D Trajectory of (u, v, w) as a function of time")
 
-ax.quiver(0, 0, 0, 1, 0, delta, color='g', label="Precession vector", arrow_length_ratio=0.1)
+# Calculate the magnitude
+magnitude = np.sqrt(1 + delta**2)
+
+# Normalize each component
+x_comp = 1 / magnitude
+y_comp = 0
+z_comp = delta / magnitude
+
+# Add the normalized quiver (vector) to the plot
+ax.quiver(0, 0, 0, x_comp, y_comp, z_comp, color='g', label="Precession vector (normalized)", arrow_length_ratio=0.1)
 
 
 # Unit sphere
